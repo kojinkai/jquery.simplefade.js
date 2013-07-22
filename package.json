@@ -1,0 +1,32 @@
+{
+  "name": "simplefade",
+  "version": "0.0.1",
+  "description": " Simple fade plugin",
+  "keywords": [
+    "jquery-plugin"
+  ],
+  "homepage": "https://github.com/kojinkai/simplefade",
+  "author": {
+    "name": "Lewis Nixon",
+    "email": "lewcfn@gmail.com",
+    "url": "https://github.com/kojinkai"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kojinkai/simplefade.git"
+  },
+  "licenses": [
+    {
+      "type": "MIT"
+    }
+  ],
+  "devDependencies": {
+    "grunt-contrib-jshint": "~0.1.1",
+    "grunt-contrib-qunit": "~0.1.1",
+    "grunt-contrib-concat": "~0.1.2",
+    "grunt-contrib-uglify": "~0.1.1",
+    "grunt-contrib-watch": "~0.2.0",
+    "grunt-contrib-clean": "~0.4.0",
+    "grunt-contrib-connect": "~0.3.0"
+  }
+}
