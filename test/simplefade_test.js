@@ -20,7 +20,7 @@
       throws(block, [expected], [message])
   */
 
-  module('simpleFade basics', {
+  module('simplefade basics', {
     // This will run before each test in this module.
     setup: function() {
       this.elems = $('#qunit-fixture').children();
@@ -30,10 +30,10 @@
   test('is chainable', function() {
     expect(1);
     // Not a bad test to run on collection methods.
-    strictEqual(this.elems.simpleFade(), this.elems, 'should be chainable');
+    strictEqual(this.elems.simplefade(), this.elems, 'should be chainable');
   });
 
-  module('simpleFade state', {
+  module('simplefade state', {
     setup: function() {
       this.elems = $('#qunit-fixture').children();
     }
@@ -41,21 +41,14 @@
 
   test('is correct state', function() {
     expect(2);
-    strictEqual(this.elems.simpleFade().children().css('position'), 'absolute', 'should be absolute');
-    strictEqual(this.elems.simpleFade().children().first().css('opacity'), '1', 'should be 1');
+    strictEqual(this.elems.simplefade().children().css('position'), 'absolute', 'should be absolute');
+    strictEqual(this.elems.simplefade().children().first().css('opacity'), '1', 'should be 1');
   });
 
-  // module(':awesome selector', {
-  //   // This will run before each test in this module.
-  //   setup: function() {
-  //     this.elems = $('#qunit-fixture').children();
-  //   }
-  // });
+  test('has active class', function() {
+    expect(1);
+    strictEqual(this.elems.simplefade().find('.active').length, 1, 'should not be 0');
+  });
 
-  // test('is awesome', function() {
-  //   expect(1);
-  //   Use deepEqual & .get() when comparing jQuery objects.
-  //   deepEqual(this.elems.filter(':awesome').get(), this.elems.last().get(), 'knows awesome when it sees it');
-  // });
 
 }(jQuery));
