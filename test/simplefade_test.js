@@ -35,19 +35,14 @@
 
   module('simplefade state', {
     setup: function() {
+      this.fixture = $('#qunit-fixture').simplefade();
       this.elems = $('#qunit-fixture').children();
     }
   });
 
-  test('is correct state', function() {
-    expect(2);
-    strictEqual(this.elems.simplefade().children().css('position'), 'absolute', 'should be absolute');
-    strictEqual(this.elems.simplefade().children().first().css('opacity'), '1', 'should be 1');
-  });
-
   test('has active class', function() {
     expect(1);
-    strictEqual(this.elems.simplefade().find('.active').length, 1, 'should not be 0');
+    strictEqual(this.fixture.find('.active').length, 1, 'should not be 0');
   });
 
 
