@@ -19,11 +19,33 @@
 <body>
   <div id="qunit"></div>
   <div id="qunit-fixture">
-    <div>
+    <div class="fade">
       <span>normal test markup</span>
       <span>awesome test markup</span>
       <span>awesome test markup</span>      
     </div>
+
+    <div class="fade-controls">
+        <div class="active">    
+            <a data-target="#design .fade" data-slide-to="0" title="grid" class="icon-grid_icon" aria-labelledby="grid design" aria-describedby="grid-desc"></a>
+            <span id="grid">
+                Grid
+            </span>
+        </div>
+        <div>    
+            <a data-target="#design .fade" data-slide-to="1" title="color" class="icon-color_icon" aria-labelledby="color design" aria-describedby="color-desc"></a>
+            <span id="color">
+                Color
+            </span>
+        </div>
+        <div>    
+            <a data-target="#design .fade" data-slide-to="2" title="typography" class="icon-type_icon" aria-labelledby="typography design" aria-describedby="type-desc"></a>
+            <span id="typography">
+                Typography
+            </span>
+        </div>                        
+    </div>
+       
   </div>
 </body>
 </html>

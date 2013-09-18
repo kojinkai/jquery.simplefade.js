@@ -35,7 +35,7 @@
 
   module('simplefade state', {
     setup: function() {
-      this.fixture = $('#qunit-fixture').simplefade();
+      this.fixture = $('#qunit-fixture').children('.fade').simplefade();
       this.elems = $('#qunit-fixture').children();
     }
   });

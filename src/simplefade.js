@@ -17,6 +17,8 @@
 
 ;(function ( $, window, document, undefined ) {
 
+  'use strict';
+
   // Create the defaults once
   var simplefade = 'simplefade',
       defaults = {
@@ -77,7 +79,7 @@
       if (this.interval) {
         clearInterval(this.interval);
       }
-      if ( this.options.interval && !this.paused ) {
+      if ( this.options.interval ) {
         this.interval = setInterval($.proxy(this.next, this), this.options.interval);
       }
       return this;
@@ -96,6 +98,42 @@
       }
       return this.fade('prev');
     },
+    
+    to: function (pos) {
+      var activeIndex = this.getActiveIndex(),
+      that = this;
+
+      if ( pos > (this.$items.length - 1) || pos < 0 ) {
+        return;
+      }
+
+      if ( this.fading ) {
+        return this.element.one('faded', function () {
+          that.to(pos);
+        });
+      }
+
+      if ( activeIndex === pos ) {
+        return this.pause().cycle();
+      }
+
+      return this.fade( pos > activeIndex ? 'next' : 'prev', $(this.$items[pos]));
+    },    
+
+    pause: function (e) {
+          if (!e) {
+            this.paused = true;
+          }
+          
+          if ($(this.element).find('.next, .prev').length && this.transitionType() ) {
+            this.element.trigger(this.transitionType);
+            this.cycle();
+          }
+
+          clearInterval(this.interval);
+          this.interval = null;
+          return this;
+        },    
 
     fade: function (type, next) {
       var $active = $(this.element).children('.active'),
@@ -131,50 +169,68 @@
         $(this.element).trigger(e);
 
         $next.addClass(type);
-        $active.addClass(direction);
-        $next.addClass(direction);
-
         $active.one( this.transitionType, function () {
+          
           // when transition ends, cleanup transitioning classes
           $next.removeClass([type, direction].join(' ')).addClass('active');
           $active.removeClass(['active', direction].join(' '));
-          that.sliding = false;
+          $next.addClass('active');
+          that.fading = false;
           
           $(that.element).trigger('faded');
-
         });
+        $active.removeClass('active');
       }
 
       else {
        
+
+       // Fallback to jQuery
         $(this.element).trigger(e);
-        $active.removeClass('active');
-        $next.addClass('active');
+        // $active.removeClass('active');
+        // $next.addClass('active');
         this.fading = false;
         $(this.element).trigger('faded');
-      }
+        $active.fadeOut(250, function() {
+          $active.removeClass('active');
+          $next.fadeIn(250).addClass('active');
+        });
 
+      }
+        this.cycle();
     }
   };
 
   $.fn[simplefade] = function ( options ) {
     return this.each(function () {
-      new SimpleFade( this, options );
+      var $this = $(this);
+      var data = $this.data('simplefade');
+      if (!data) {
+        $this.data('simplefade', (data = new SimpleFade(this, options)));
+      }
+      else {
+        new SimpleFade( this, options );
+      }      
     });
   };  
 
  /* simpleFade DATA-API
   * ================= */
 
-  $(document).on('click.carousel.data-api', '[data-slide], [data-slide-to]', function (e) {
+  $(document).on('click.simplefade.data-api', '[data-slide], [data-slide-to]', function (e) {
   
     var $this = $(this), 
     href,
 
     // regex strip for ie7
     target = $this.attr('data-target') || e.preventDefault() || (href = $this.attr('href')) && href.replace(/.*(?=#[^\s]+$)/, ''),
-    option = $this.data();
-    $(target).simplefade(option);
+    slideIndex = $this.attr('data-slide-to');
+    
+    if (slideIndex) {
+      $(target).data('simplefade').pause().to(slideIndex);
+    }
+
+    e.preventDefault();
   }); 
 
 })( jQuery, window, document );
